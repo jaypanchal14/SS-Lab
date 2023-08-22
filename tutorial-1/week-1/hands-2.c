@@ -5,6 +5,6 @@
 int main(){
 	// After compiling, run it in background using ./<executable> &
 	// Then check in directory /proc/p-id/
-	while(1)
+	while(1);
 	return 0;
 }
