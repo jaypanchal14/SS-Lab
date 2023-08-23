@@ -11,7 +11,7 @@ int main(int argc, char* arg[]){
 		return -1;
 	}	
 	int fd_source = open(arg[1], O_RDONLY);
-    int fd_dest = open(arg[2], O_WRONLY|O_CREAT,S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    int fd_dest = open(arg[2], O_WRONLY|O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if(fd_source==-1 || fd_dest==-1){
 		printf("Not able to open the file\n");
 	}

@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <time.h>
 
 int main(int argc, char* arg[]){
 	
@@ -23,8 +24,12 @@ int main(int argc, char* arg[]){
 	printf("Size : %ld \n", buf.st_size);
 	printf("Block-size : %ld \n", buf.st_blksize);
 	printf("Number of blocks : %ld \n", buf.st_blocks);
-	printf("Time of last access : %ld \n", buf.st_atim);
-	printf("Time of last modification : %ld \n", buf.st_mtim);
-	printf("Time of last change : %ld \n", buf.st_ctim);
+	printf("Time of last access : %s", ctime(&buf.st_atime));
+	
+	//This will give warning, that we are directly printing the millis from epoch
+	// There are two variables available in struct stat : st_mtim and st_mtime, similar for other timestamps
+	//printf("Time of last modification : %ld \n", buf.st_mtim);
+	printf("Time of last modification : %s", ctime(&buf.st_mtime));
+	printf("Time of last change : %s", ctime(&buf.st_ctime));
 	return 0;
 }
