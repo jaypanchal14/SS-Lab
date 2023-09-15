@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//Objective : to print ENV variables of the system.
+
 // the third parameter in the main method contains all the env variables.
 int main(int argc, char** arg[], char** e){
 

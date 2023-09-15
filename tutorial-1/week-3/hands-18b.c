@@ -4,6 +4,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+/*
+Objective : 
+to implement read and write lock over particular records of the file.
+Only one record can be locked at a time by a process.
+*/
 int main(){
 	
 	int fd = open("3-records.txt", O_RDWR, 0644);

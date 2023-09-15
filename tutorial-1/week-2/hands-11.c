@@ -4,6 +4,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+//Objective : to create a duplicate file descriptor of the same file using
+//			  different system call
+
 int main(int argc, char* arg[]){
 	
 	if(argc!=2){

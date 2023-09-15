@@ -4,15 +4,18 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+/*
+Objective : 
+These program will perform mandatory file locking
+Kernel will only let one process to access the file who has acquired lock over it,
+Other process can't access the same file until the lock is released.
+*/
+
 int main(int argc, char** arg){
 	
 	if(argc!=2){
 		printf("Need to pass one file-name with executable file.\n");
 	}
-	
-	//These program will perform mandatory file locking
-	//Kernel will only one file to access the file who has acquired lock over it,
-	//Other process can't access the same file until the lock is released.
 	
 	//permission will be applied to the file, only when new file is created.
 	int fd = open(arg[1], O_CREAT | O_RDWR, 0644);

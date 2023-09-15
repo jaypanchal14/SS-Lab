@@ -4,6 +4,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+//Objective : to create a file to store multiple records sample to be used in hands-18b.c
+
 int main(){
 	
 	int fd = open("3-records.txt", O_RDWR | O_CREAT, 0644);

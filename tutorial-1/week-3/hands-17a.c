@@ -4,6 +4,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+//Objective : to demonstrate the file-locking under hands-17b.c program,
+//			  this program will create a sample file.
+
 int main()
 {
 	printf("Enter an initial ticket-count which will be stored in 'ticket.txt'\n");

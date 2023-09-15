@@ -22,7 +22,7 @@ add_record(){
 	echo "Enter telephone number: "
 	read phone
 	if grep -q "^.*:$num:.*$" menu_emp_record.txt;
-		then echo "Employee number $num already exists, not going create new."
+		then echo "Employee number $num already exists, not going to create a new employee record."
 	else
 		echo "$name:$num:$phone">> menu_emp_record.txt
 		echo "Employee record created."

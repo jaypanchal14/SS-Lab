@@ -4,6 +4,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+//Objective : to print the opening mode of the file using fcntl system call
+
 int main(int argc, char** arg){
 
 	//Program to return the access mode of the file

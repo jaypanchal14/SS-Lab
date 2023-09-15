@@ -5,6 +5,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+//Objective : how to use select system call for monitoring different fds for the I/O operation.
+
 int main(){
 	
 	// Set of all fds'

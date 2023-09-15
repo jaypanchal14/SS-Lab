@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <stdio.h>
 
+//Objective : learn how to use lseek system call, to move the file-pointer while reading and writing.
+
 int main(){
 	printf("Enter a file-name: \n");
 	char fileName[100];

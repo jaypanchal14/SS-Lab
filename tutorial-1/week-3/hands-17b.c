@@ -4,6 +4,12 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+/*
+Objective : 
+To implement file-locking to increate a stored value in the file by only
+one process at a time.
+*/
+
 int main(){
 	
 	int fd = open("ticket.txt", O_RDWR, 0644);

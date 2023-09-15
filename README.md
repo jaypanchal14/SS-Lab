@@ -1,1 +1,1 @@
-This is a repository containins examples performed under software system lab.
+This is a repository which contains examples performed under software system lab.

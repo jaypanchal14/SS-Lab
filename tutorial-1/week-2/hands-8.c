@@ -4,6 +4,10 @@
 #include <unistd.h>
 #include <stdio.h>
 
+//Objective : Write a program to open a file in read only mode, 
+//			  read line by line and display each line as it is read.
+//			  Close the file when end of file is reached.
+
 int main(int argc, char* arg[]){
 
 	if(argc!=2){
@@ -13,6 +17,7 @@ int main(int argc, char* arg[]){
 	int fd_source = open(arg[1], O_RDONLY);
     if(fd_source==-1){
 		printf("Not able to open the file\n");
+		exit(1);
 	}
 	//To read from source line by line and print to console
 	char buf[128];

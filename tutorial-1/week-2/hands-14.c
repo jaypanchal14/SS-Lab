@@ -2,6 +2,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+//Objective : To identify the file-type of any given file.
+
 int main(int argc, char* arg[]){
 	
 	if(argc!=2){

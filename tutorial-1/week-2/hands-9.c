@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <time.h>
 
+//Objective : To print file related information using stat system call.
+
 int main(int argc, char* arg[]){
 	
 	if(argc!=2){
