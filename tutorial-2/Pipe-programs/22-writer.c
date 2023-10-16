@@ -27,7 +27,7 @@ void main(){
         exit(EXIT_FAILURE);
     }
     printf("Enter message for 22-reader.c: ");
-    scanf("%[^\n]s", &msg);
+    scanf("%[^\n]s", msg);
     
     write(fd, msg, strlen(msg));
     close(fd);
