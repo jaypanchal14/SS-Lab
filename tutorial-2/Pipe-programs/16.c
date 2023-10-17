@@ -1,58 +1,55 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
-#include<string.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 /*
-Objective:
-Write a program to send and receive data from parent to child vice-versa. Use two way communication.
+Objective: Create a FIFO file.
 */
 
 void main(){
-    int p2c[2];
-    int c2p[2];
 
-    if(pipe(p2c) == -1){
-        perror("Error while creating parent-to-child pipe");
-        exit(EXIT_FAILURE);
+    /*
+    (a) mknod command:
+    mknod <name> <type>   i.e., mknod a p
+    <name> : your desired name
+    <type> -> p: pipe,  c: character device, b: block device
+    */
+
+    /*
+    (b) mkfifo command:
+    mkfifo <name>
+    */
+    
+    /*
+    (c)use strace command to find out, which command (mknod or mkfifo) is better.
+    Run these two commands:
+    strace mknod a p
+    strace mkfifo a
+    -> By analyzing, we can say mkfifo is better for creating pipe.
+    */
+
+    //(d) Using mknod system call
+    if(mknod("ff", S_IFIFO | 0744, 0)){
+        perror("Failure while creating fifo 'ff' using mknod");
+        //exit(1);
     }
 
-    if(pipe(c2p) == -1){
-        perror("Error while creating child-to-parent pipe");
-        exit(EXIT_FAILURE);
+    //(e) Using mkfifo system call
+    //This will return an error as we have already created a fifo with name ff
+    if(mkfifo("ff" , 0744)){
+        perror("Failure while creating fifo 'ff' using mkfifo");
+        //exit(1);
     }
 
-    int pId = fork();
-
-    if(pId != 0){
-        //Parent process
-        close(p2c[0]);
-        close(c2p[1]);
-
-        char* msg = "Hi child.";
-        write(p2c[1], msg, strlen(msg));
-        char buf[200];
-        read(c2p[0], &buf, 200);
-        printf("Message received at parent from child : %s\n",buf);
-
-        close(p2c[1]);
-        close(c2p[0]);
-
-    }
-    else{
-        //Child process
-        close(p2c[1]);
-        close(c2p[0]);
-
-        char buf[200];
-        read(p2c[0], &buf, 200);
-        printf("Message received at child from parent : %s\n",buf);
-        char* msg = "Hi parent.";
-        write(c2p[1], msg, strlen(msg));
-
-        close(p2c[0]);
-        close(c2p[1]);
-
+    //To delete the fifo
+    char* name = "ff";
+    if(unlink(name)){
+        perror("Error while deleting fifo");
+    }else{
+        printf("FIFO deleted successfully.\n");
     }
 
 }
