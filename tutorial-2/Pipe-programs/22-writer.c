@@ -22,7 +22,7 @@ void main(){
     
     int fd;
     //Opening to write to FIFO
-    if((fd = open("ff-22", O_WRONLY))){
+    if((fd = open("ff-22", O_WRONLY)) == -1){
         perror("Not able to open fifo");
         exit(EXIT_FAILURE);
     }
