@@ -13,6 +13,9 @@ void main(){
 
     char* msg = "Message from 20-a.c";
 
+    //Use this to delete the already created fifo
+    unlink("ff");
+
     if(mkfifo("ff", 0744)){
         perror("Not able to create fifo");
         exit(EXIT_FAILURE);
@@ -20,12 +23,14 @@ void main(){
     
     int fd;
     //Opening to write to FIFO
-    if((fd = open("ff", O_WRONLY))){
+    if((fd = open("ff", O_WRONLY))==-1){
         perror("Not able to open fifo");
         exit(EXIT_FAILURE);
     }
 
     write(fd, msg, strlen(msg));
     close(fd);
+    printf("Writted to PIPE: %s\n",msg);
+    
 
 }
