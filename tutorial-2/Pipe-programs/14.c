@@ -22,6 +22,6 @@ void main(){
     write(p[1],s,strlen(s));
     char buf[64];
     read(p[0], &buf, sizeof(buf));
-    printf("Message from pipe: %s",buf);
+    printf("Message from pipe: %s\n",buf);
 
 }
