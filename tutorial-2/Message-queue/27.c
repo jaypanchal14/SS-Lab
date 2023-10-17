@@ -35,23 +35,24 @@ void main(){
     //As we have set mm.type as '1', we are passing 4th parameter as 1.
     //As we have sent a message using 26.c, we will run this program to receive the same message
     //(a) with 0 as a flag -> it will wait, till we get the message from the queue [Blocking call]
-    while(1){
+    /*while(1){
         if (msgrcv(msg_id, &mm, sizeof(mm.text), 1, 0) == -1) {
             perror("Error while receiving message from queue");
             exit(1);
         }
         printf("Received message: %s\n", mm.text);
-    }
+    }*/
 
     //(b)with IPC_NOWAIT as a flag. [Non-blocking call]
-    /*
+    
     while(1){
+        //This will fail at the instant, when there will be no message in the queue with the same message-type (here type is '1')
         if (msgrcv(msg_id, &mm, sizeof(mm.text), 1, IPC_NOWAIT) == -1) {
             perror("Error while receiving message from queue");
             exit(1);
         }
         printf("Received message: %s\n", mm.text);
     }
-    */
+    
 
 }
