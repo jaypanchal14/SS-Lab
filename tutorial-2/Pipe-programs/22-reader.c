@@ -16,8 +16,8 @@ void main(){
     char buf[100];
     
     int fd;
-    //Opening to write to FIFO
-    if((fd = open("ff-22", O_RDONLY))){
+    //Opening to read from FIFO
+    if((fd = open("ff-22", O_RDONLY)) == -1){
         perror("Not able to open fifo");
         exit(EXIT_FAILURE);
     }
@@ -40,7 +40,7 @@ void main(){
 	} else if(value){
 		printf("Data available from STDIN\n");
         read(fd, &buf, 100);
-        printf("Message from 22-write.c : %s", msg);
+        printf("Message from 22-write.c : %s\n", buf);
 	} else{
 		printf("Defined wait is over, possible reason : No new connection were made or No data sent from existing connection(fd).\n");
 	}
