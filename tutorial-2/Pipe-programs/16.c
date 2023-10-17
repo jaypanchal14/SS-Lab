@@ -33,7 +33,7 @@ void main(){
         write(p2c[1], msg, strlen(msg));
         char buf[200];
         read(c2p[0], &buf, 200);
-        printf("Message received at parent from child : %s",buf);
+        printf("Message received at parent from child : %s\n",buf);
 
         close(p2c[1]);
         close(c2p[0]);
@@ -46,9 +46,9 @@ void main(){
 
         char buf[200];
         read(p2c[0], &buf, 200);
-        printf("Message received at child from parent : %s",buf);
+        printf("Message received at child from parent : %s\n",buf);
         char* msg = "Hi parent.";
-        write(p2c[1], msg, strlen(msg));
+        write(c2p[1], msg, strlen(msg));
 
         close(p2c[0]);
         close(c2p[1]);
