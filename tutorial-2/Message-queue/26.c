@@ -38,5 +38,9 @@ void main(){
         perror("Error while sending message on queue");
         exit(1);
     }
-    printf("Message is sent, check with command -> 'ipcs -q'");
+    printf("Message is sent, check with command -> 'ipcs -q'\n");
+
+    //To delete a message from the message queue using msq-id
+    // run command -> ipcrm -q <id>   (you can get the id from the command 'ipcs -q')
+
 }
