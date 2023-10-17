@@ -30,7 +30,7 @@ void main(){
     struct msqid_ds info;
 
     // Get information about the message queue
-    if (msgctl(msqid, IPC_STAT, &info) == -1)
+    if (msgctl(msg_id, IPC_STAT, &info) == -1)
     {
         perror("Error while executing msgctl");
     }
