@@ -26,19 +26,18 @@ void main(){
 
     struct msqid_ds info;
     // Retrieve current message queue settings
-    if (msgctl(msqid, IPC_STAT, &queueInfo) == -1) {
+    if (msgctl(msg_id, IPC_STAT, &info) == -1) {
         perror("Error while fecthing queue-info");
         exit(1);
     }
-
+    printf("Successfully fetched queue-permission : %d\n",info.msg_perm.mode);
     //Updating the permission
-    info.msg_perm.mode = 0777;
+    info.msg_perm.mode = 777;
 
-    if (msgctl(msq_id, IPC_SET, &info) == -1) {
+    if (msgctl(msg_id, IPC_SET, &info) == -1) {
         perror("Error while setting queue-info");
         exit(1);
     }
-
-    printf("Message queue permissions updated.\n");
+    printf("Updated queue-permission : %d\n",info.msg_perm.mode);
 
 }
