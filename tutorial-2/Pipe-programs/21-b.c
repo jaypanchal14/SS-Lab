@@ -14,22 +14,22 @@ void main(){
 
     int fd;
 
-    if((fd = open("ff", O_RDWR))){
+    if((fd = open("ff", O_RDWR)) == -1){
         perror("Not able to open fifo");
         exit(EXIT_FAILURE);
     }
 
     char msgRec[100];
-    if(read(fd, &msgRec, 100)){
+    if(read(fd, &msgRec, 100) == -1){
         perror("Error while reading from fifo");
         exit(EXIT_FAILURE);
     }
 
-    printf("Message from 21-a.c: %s", msgRec);
+    printf("Message from 21-a.c: %s\n", msgRec);
 
     char msgSent[100];
     printf("Enter message to send: ");
-    scanf("%[^\n]s", &msgSent);
+    scanf("%[^\n]s", msgSent);
 
     if(write(fd, msgSent, strlen(msgSent)) == -1){
         perror("Error while writing to the fifo");
