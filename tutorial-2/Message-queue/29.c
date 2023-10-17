@@ -19,7 +19,7 @@ void main(){
 
     int msg_id;
     // Create a message queue with read and write permissions (IPC_CREAT : if it doesn't exits, it creates)
-    if ((msg_id = msgget(key, 0744 | IPC_CREAT)) == -1) {
+    if ((msg_id = msgget(key, 0777 | IPC_CREAT)) == -1) {
         perror("Error while creating msg-queue");
         exit(1);
     }
