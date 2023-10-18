@@ -1,43 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
 
 #define PORT 8989
 
-void* handle_client(void* client_socket_ptr) {
-    int client_socket = *((int*)client_socket_ptr);
-    free(client_socket_ptr);
-    char buffer[100];
-    int bytes_received;
+/*
+Objective:
+Write a program to create a concurrent server using threads to handle client.
+*/
 
-    while (1) {
-        bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
-        if (bytes_received <= 0) {
-            break;
-        }
-        printf("Received: %s", buffer);
-        memset(buffer, 0, sizeof(buffer));
-    }
+void* handle_client(void* client_ptr);
 
-    close(client_socket);
-    pthread_exit(NULL);
-}
+void main() {
 
-int main() {
-    int server_fd, client_socket;
+    int server, client;
     struct sockaddr_in server_addr, client_addr;
     socklen_t addr_size = sizeof(client_addr);
     pthread_t thread_id;
 
     // Create a socket
-    server_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (server_fd < 0) {
+    server = socket(AF_INET, SOCK_STREAM, 0);
+    if (server < 0) {
         perror("Socket creation error");
         exit(EXIT_FAILURE);
+    }
+
+    int resuse = 1;
+    if(setsockopt(server, SOL_SOCKET, SO_REUSEADDR, &resuse, sizeof(resuse)) == -1){
+        perror("Not able to set options in server-socket");
+        exit(1);
     }
 
     server_addr.sin_family = AF_INET;
@@ -45,13 +40,13 @@ int main() {
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     // Bind the socket to the server address
-    if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
+    if (bind(server, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         perror("Binding error");
         exit(EXIT_FAILURE);
     }
 
-    // Listen for incoming connections
-    if (listen(server_fd, 10) == 0) {
+    // Listen for incoming connections with backlog of size 5
+    if (listen(server, 5) == 0) {
         printf("Listening...\n");
     } else {
         perror("Listening error");
@@ -60,19 +55,39 @@ int main() {
 
     while (1) {
         // Accept incoming connection
-        client_socket = accept(server_fd, (struct sockaddr*)&client_addr, &addr_size);
+        client = accept(server, (struct sockaddr*)&client_addr, &addr_size);
 
-        if (client_socket < 0) {
+        if (client < 0) {
             perror("Accept error");
             exit(EXIT_FAILURE);
         }
 
         // Create a new thread to handle the client
-        pthread_create(&thread_id, NULL, handle_client, (void*)&client_socket);
+        pthread_create(&thread_id, NULL, handle_client, (void*)&client);
 
         // Detach the thread
         pthread_detach(thread_id);
     }
 
-    return 0;
+}
+
+void* handle_client(void* client_ptr) {
+    int client = *((int*)client_ptr);
+    free(client_ptr);
+    char buffer[100];
+    int bytes_received;
+
+    while (1) {
+
+        //Add code according to your convenience
+        bytes_received = recv(client, buffer, 100, 0);
+        if (bytes_received <= 0) {
+            break;
+        }
+        printf("Received: %s\n", buffer);
+        memset(buffer, 0, sizeof(buffer));
+    }
+
+    close(client);
+    pthread_exit(NULL);
 }
