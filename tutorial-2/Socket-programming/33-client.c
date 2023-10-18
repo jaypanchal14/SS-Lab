@@ -15,11 +15,11 @@ void main() {
     int client;
     struct sockaddr_in addr;
     
-    char buf[1024];
-    char* msg = "Hi server.";
+    char buf[100];
+    char msg[100];
     // Creating socket with IPV4 and TCP channel
-    server = socket(AF_INET, SOCK_STREAM, 0);
-    if (server < 0) {
+    client = socket(AF_INET, SOCK_STREAM, 0);
+    if (client < 0) {
         perror("Error while creating socket");
         exit(1);
     }
@@ -34,10 +34,26 @@ void main() {
         exit(EXIT_FAILURE);
     }
     
-    recv(client, &buf, 1024, 0);
-    printf("Message from server : %s",buf);
-    send(client, msg, strlen(msg), 0);
     
+    while(1){
+
+        memset(buf, 0, 100);
+        memset(msg, 0, 100);
+
+        recv(client, &buf, 100, 0);
+        printf("Message from server : %s\n",buf);
+        
+        printf("Enter next message for server: ");
+        scanf("%s",msg);
+        send(client, msg, strlen(msg), 0);
+        
+        //read(0, &buf, 100);
+        //gets(buf);
+        if((strcmp(msg, "EXIT") == 0) || (strcmp(msg, "exit") == 0)){
+                break;
+        }
+    
+    }
     close(client);
     
 }
